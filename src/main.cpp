@@ -38,10 +38,12 @@ int main()
             }
         }
 
-        // sf::Vector2i mousePos = sf::Mouse::getPosition();
+        sf::Vector2i mousePos = sf::Mouse::getPosition();
+        sf::String xOut(std::to_string(mousePos.x));
+        sf::String yOut(std::to_string(mousePos.y));
+        text.setString( xOut + ", " + yOut );
 
         mainWindow.clear();
-        // mainWindow.draw(mainShape);
         mainWindow.draw(text);
         mainWindow.display();
     }
