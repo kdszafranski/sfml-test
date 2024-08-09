@@ -1,10 +1,14 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/System/Vector2.hpp>
+#include "util.cpp"
+
+const int SCREEN_WIDTH = 800;
+const int SCREEN_HEIGHT = 600;
 
 int main()
 {
-    auto mainWindow = sf::RenderWindow(sf::VideoMode(800, 600, 32u), "CMake SFML asdfProject");
+    auto mainWindow = sf::RenderWindow(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32u), "CMake SFML asdfProject");
 
     sf::CircleShape mainShape(200.0f);
     mainShape.setFillColor(sf::Color::Red);
@@ -28,6 +32,12 @@ int main()
     // set the text style
     text.setStyle(sf::Text::Bold);
 
+
+    // colors
+    float redSteps = SCREEN_WIDTH % 255;
+    float blueSteps = SCREEN_HEIGHT % 255;
+    int color = 0;
+
     while (mainWindow.isOpen())
     {
         for (auto event = sf::Event(); mainWindow.pollEvent(event);)
@@ -38,13 +48,16 @@ int main()
             }
         }
 
-        sf::Vector2i mousePos = sf::Mouse::getPosition();
-        sf::String xOut(std::to_string(mousePos.x));
-        sf::String yOut(std::to_string(mousePos.y));
-        text.setString( xOut + ", " + yOut );
+        sf::Vector2i mousePos = sf::Mouse::getPosition(mainWindow);
+        sf::Vector2f worldMouse = mainWindow.mapPixelToCoords(mousePos);
+        // sf::Vector2f worldMouse = mainWindow.mapCoordsToPixel(mousePos);
+        text.setString( std::to_string(redSteps) );
+        text.setString( ts_util::getMousePositionString(worldMouse));
 
-        mainWindow.clear();
+        mainWindow.clear(sf::Color(0, 0, 0));
         mainWindow.draw(text);
         mainWindow.display();
+
+        color++;
     }
 }

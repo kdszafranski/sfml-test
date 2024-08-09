@@ -14,6 +14,7 @@ add_executable(main src/main.cpp)
 target_link_libraries(main PRIVATE sfml-graphics)
 target_compile_features(main PRIVATE cxx_std_17)
 
+# copy over binary assets
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR}/bin)
 
 if(WIN32)
