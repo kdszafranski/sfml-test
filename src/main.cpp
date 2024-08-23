@@ -22,6 +22,7 @@ int main()
     }
 
     sf::Text mousePosText;
+    sf::String inputBuffer = "";
     mousePosText.setFont(font);
 
     // set the character size
@@ -58,6 +59,16 @@ int main()
                     char n = static_cast<char>(event.text.unicode);
                     userText.setString( userText.getString() + n );
                 }
+            }
+
+            if (event.type == sf::Event::LostFocus) {
+                inputBuffer = userText.getString();
+                userText.setString("Game Paused");
+            }
+
+            if(event.type == sf::Event::GainedFocus) {
+                userText.setString(inputBuffer);
+                inputBuffer = "";
             }
         }
 
