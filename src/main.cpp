@@ -11,6 +11,8 @@ int main()
 {
     auto mainWindow = sf::RenderWindow(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32u), "Cool Stuff");
 
+    sf::Vector2i mousePos = {1, 1};
+
     sf::CircleShape mainShape(16.0f);
     mainShape.setFillColor(sf::Color::Red);
     mainWindow.setFramerateLimit(144);
@@ -36,7 +38,7 @@ int main()
 
     sf::Text userText = mousePosText;
     userText.setCharacterSize(18);
-    userText.setPosition({ SCREEN_HEIGHT - 20, 0 });
+    userText.setPosition({SCREEN_HEIGHT - 20, 0});
 
     // colors
     float redSteps = SCREEN_WIDTH % 255;
@@ -55,30 +57,32 @@ int main()
             if (event.type == sf::Event::TextEntered)
             {
                 if (event.text.unicode < 128)
-                { 
+                {
                     char n = static_cast<char>(event.text.unicode);
-                    userText.setString( userText.getString() + n );
+                    userText.setString(userText.getString() + n);
                 }
             }
 
-            if (event.type == sf::Event::LostFocus) {
+            if (event.type == sf::Event::LostFocus)
+            {
                 inputBuffer = userText.getString();
                 userText.setString("Game Paused");
             }
 
-            if(event.type == sf::Event::GainedFocus) {
+            if (event.type == sf::Event::GainedFocus)
+            {
                 userText.setString(inputBuffer);
                 inputBuffer = "";
             }
+
+            if (event.type == sf::Event::MouseMoved)
+            {
+                mousePos = { event.mouseMove.x, event.mouseMove.y };
+                mousePosText.setString(std::to_string(mousePos.x) + ", " + std::to_string(mousePos.y));
+            }
         }
 
-        sf::Vector2i mousePos = sf::Mouse::getPosition(mainWindow);
-        sf::Vector2f worldMouse = mainWindow.mapPixelToCoords(mousePos);
-        // sf::Vector2f worldMouse = mainWindow.mapCoordsToPixel(mousePos);
-        // text.setString(std::to_string(redSteps));
-        mousePosText.setString(ts_util::getMousePositionString(worldMouse));
-
-        mainShape.setPosition(worldMouse);
+        mainShape.setPosition( (float)mousePos.x, (float)mousePos.y );
 
         mainWindow.clear(sf::Color(0, 0, 20));
         mainWindow.draw(mousePosText);
