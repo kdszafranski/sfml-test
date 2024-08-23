@@ -1,7 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/System/Vector2.hpp>
-#include "util.cpp"
 #include <iostream>
 
 const int SCREEN_WIDTH = 800;
