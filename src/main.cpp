@@ -16,6 +16,9 @@ int main()
     mainShape.setFillColor(sf::Color::Red);
     mainWindow.setFramerateLimit(144);
 
+    // cout works in windows ;)
+    //std::cout << "hello";
+
     sf::Font font;
     if (!font.loadFromFile("assets/fonts/Acme-Regular.ttf"))
     {
